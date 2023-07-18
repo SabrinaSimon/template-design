@@ -1,0 +1,63 @@
+// Base Template
+public abstract class ModelTemplate<T> {
+    protected abstract void persistData(T model);
+
+    public final void process(T model) {
+        validate(model);
+        executeCommonBusinessLogic(model);
+        executeSpecificBusinessLogic(model);
+        persistData(model);
+    }
+
+    protected abstract void executeSpecificBusinessLogic(T model);
+
+    // Common Validation Logic
+    protected void validate(T model) {
+        // Implement common validation logic
+    }
+
+    // Common Business Logic
+    protected void executeCommonBusinessLogic(T model) {
+        // Implement common business logic
+    }
+}
+
+// Model Template for Model A
+public class ModelATemplate extends ModelTemplate<ModelA> {
+    @Override
+    protected void executeSpecificBusinessLogic(ModelA model) {
+        // Implement specific business logic for Model A
+    }
+
+    @Override
+    protected void persistData(ModelA model) {
+        // Use JPA to persist Model A data to the H2 database
+    }
+}
+
+// Model Template for Model B
+public class ModelBTemplate extends ModelTemplate<ModelB> {
+    @Override
+    protected void executeSpecificBusinessLogic(ModelB model) {
+        // Implement specific business logic for Model B
+    }
+
+    @Override
+    protected void persistData(ModelB model) {
+        // Use JPA to persist Model B data to the H2 database
+    }
+}
+
+// Usage Example
+public class Main {
+    public static void main(String[] args) {
+        ModelATemplate templateA = new ModelATemplate();
+        ModelA modelA = new ModelA(); // Instantiate Model A
+
+        ModelBTemplate templateB = new ModelBTemplate();
+        ModelB modelB = new ModelB(); // Instantiate Model B
+        
+        templateA.process(modelA); // Validate, execute common and specific business logic, and persist Model A
+        templateB.process(modelB); // Validate, execute common and specific business logic, and persist Model B
+    }
+}
